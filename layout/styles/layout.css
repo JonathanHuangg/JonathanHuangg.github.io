@@ -35,7 +35,7 @@ File: Layout CSS
 
 #pageintro article, #pageintro article p{display:block; max-width:75%; margin:0 auto; text-align:center;}
 #pageintro article p{max-width:65%; line-height:2rem;}
-#pageintro .heading{margin-bottom:20px; font-size:4rem;}
+#pageintro .heading{margin-bottom:20px; font-size:8rem;}
 #pageintro footer{margin-top:50px;}
 
 
@@ -535,4 +535,14 @@ table a, #comments a{background-color:inherit;}
 
 	.font-x2{font-size:1.6rem;}
 	.font-x3{font-size:1.8rem;}
+
+
+}
+/* Me adding extra stuff */
+.hidden-text {
+	display: none;
+}
+
+.expanded-text {
+	display: block;
 }
