@@ -10,10 +10,15 @@ File: Framework CSS
 */
 
 html{overflow-y:scroll; overflow-x:hidden;}
-html, body{margin:0; padding:0; font-size:14px; line-height:1.6em;}
+html, body{margin:0; padding:0; font-size:14px; line-height:1.6em;} /* This is for general consistency for html*/
 
 *, *::before, *::after{box-sizing:border-box;}
 
+/*
+
+Following functions are general classes to style elements in html. 
+
+*/
 .bold{font-weight:bold;}
 .center{text-align:center;}
 .right{text-align:right;}

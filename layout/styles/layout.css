@@ -67,9 +67,31 @@ File: Layout CSS
 #services .elements article{border-radius:0;}
 
 /* Shout */
-.shout{}
-.shout figure{display:block; max-width:546px;/* same width as the image - contains the caption */}
-.shout figure img{}
+.shout{
+	display: flex;
+	flex-wrap: nowrap; /* make it stay on single line */
+	overflow-x: auto; /* enables horizontal scrolling */
+	justify-content: center; /* Centers line along horizontal axis*/
+}
+.shout figure{
+	display:block; 
+	max-width:546px;/* same width as the image - contains the caption */
+	flex: 0 0 33.333333%; /*Flex grow, flex shrink, flex-basis*/
+	max-width: 33.33333%;
+	display: block; /* each figure takes up width */
+	margin: 0;
+	text-align: center;
+}
+
+/* javascript will hide/show scrolling figures*/
+.shout figure {
+	display:none;
+}
+
+.shout figure.active {
+	display: block;
+}
+
 .shout figure figcaption{display:block; position:relative;}
 .shout figure figcaption a{display:block; position:relative; padding:15px; border:solid; border-width:0 1px 1px 1px;}
 .shout figure figcaption a::after{position:absolute; top:12px; right:15px; width:30px; height:30px; line-height:30px; font-family:"Font Awesome\ 5 Free"; font-weight:900; content:"\f105";/* fa-angle-right */ text-align:center; border-radius:50%;}
@@ -319,8 +341,15 @@ input:focus, textarea:focus, *:required:focus{border-color:#97A9BD !important;}
 .overlay.light::after{background-color:rgba(151,169,189,.7);/* #97A9BD */}
 
 .gradient{color:#474747; background:linear-gradient(to bottom, #F4F4F4 55%, #FFFFFF 50%, #FFFFFF 100%);}/* Overlap dark to make a hard transition */
+
+
+/* Adapt to different screen sizes and applies if less than 750 pixels width */
 @media screen and (max-width:750px){/* Only the colours height has been changed */
 	.gradient{background:linear-gradient(to bottom, #F4F4F4 24%, #FFFFFF 19%, #FFFFFF 100%);}
+	.shout figure {
+		flex: 0 0 100%;
+		max-width: 100%;
+	}
 }
 
 .btn, .btn.inverse:hover{color:#FFFFFF; background-color:#97A9BD; border-color:#97A9BD;}
@@ -553,4 +582,24 @@ table a, #comments a{background-color:inherit;}
 
 .expanded-text {
 	display: block;
+}
+
+/* This is for the navigation bar */
+#prev, #next {
+	position: absolute; /* Buttons are positioned absolutely to parent */
+	top: 50%; /* buttons are halfway down container */
+	transform: translateY(-50%); /* buttons are vertically centered */
+	background-color: #97A9BD; 
+	color: white; /* text color */
+	border: none;
+	padding: 10px;
+	cursor: pointer; /* change pointer on hover */
+}
+
+#prev {
+	left: 10px; /* 10px from the left */
+}
+
+#right {
+	right: 10px;
 }

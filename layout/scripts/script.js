@@ -9,3 +9,35 @@ function toggleText(id) {
         text.classList.add('expanded-text');
     }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    var figures = document.querySelectorAll("#figureCarousel figure");
+    var currIndex = 0;
+    var numFiguresToShow = 3;
+
+    function showFigures(startIndex) {
+        figures.forEach((fig, idx) => {
+            if (idx >= startIndex && idx < startIndex + numFiguresToShow) {
+                fig.classList.add('active');
+            } else {
+                fig.classList.remove('active');
+            }
+        })
+    }
+
+    function nextFigures() {
+        currIndex = (currIndex + numFiguresToShow) % figures.length;
+        showFigures(currIndex);
+    }
+
+    function prevFigures() {
+        currIndex = (currIndex - numFiguresToShow + figures.length) % figures.length;
+        showFigures(currIndex)
+    }
+
+    document.getElementById("next").addEventListener("click", nextFigures);
+    document.getElementById("next").addEventListener("click", nextFigures);
+
+    showFigures(currIndex);
+
+});
