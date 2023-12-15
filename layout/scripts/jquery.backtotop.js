@@ -8,7 +8,11 @@ Licence URI: https://www.os-templates.com/template-terms
 File: Back to Top JS
 */
 
-
+jQuery("#backtotop").click(function () {
+    jQuery("body,html").animate({
+        scrollTop: 0
+    }, 600);
+});
 jQuery(window).scroll(function () {
     if (jQuery(window).scrollTop() > 150) {
         jQuery("#backtotop").addClass("visible");
@@ -17,13 +21,3 @@ jQuery(window).scroll(function () {
     }
 });
 
-function toggleText(id) {
-    var text = document.getElementById(id);
-    if (classList.contains('expanded text')) {
-        text.classList.remove('expanded text');
-        text.classList.add('hidden text');
-    } else {
-        text.classList.remove('hidden text');
-        text.classList.remove('expanded text');
-    }
-}
