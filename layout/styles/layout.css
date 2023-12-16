@@ -67,25 +67,24 @@ File: Layout CSS
 #services .elements article{border-radius:0;}
 
 /* Shout */
-.shout{
+.shout {
 	display: flex;
 	flex-wrap: nowrap; /* make it stay on single line */
-	overflow-x: auto; /* enables horizontal scrolling */
-	justify-content: center; /* Centers line along horizontal axis*/
-}
-.shout figure{
-	display:block; 
-	max-width:546px;/* same width as the image - contains the caption */
-	flex: 0 0 33.333333%; /*Flex grow, flex shrink, flex-basis*/
-	max-width: 33.33333%;
-	display: block; /* each figure takes up width */
-	margin: 0;
-	text-align: center;
+	overflow-x: hidden; /* prevents horizontal scrolling */
+	justify-content: flex-start; /* Centers line along horizontal axis*/
+
+	/* These were added to troubleshoot cramming of left side*/
+	align-items: center;
+	width: 100%;
 }
 
-/* javascript will hide/show scrolling figures*/
 .shout figure {
-	display:none;
+
+	flex: 0 0 33.333333%; /* Flex grow, flex shrink, flex-basis */
+    transition: transform 2s ease; /* Smooth transition for the transform effect */
+    margin: 0; /* Reset any default margins */
+    text-align: center; /* Center text within the figure */
+	display: none;
 }
 
 .shout figure.active {
@@ -585,6 +584,11 @@ table a, #comments a{background-color:inherit;}
 }
 
 /* This is for the navigation bar */
+
+#figureCarousel {
+    visibility: hidden;
+	overflow: hidden;
+}
 #prev, #next {
 	position: absolute; /* Buttons are positioned absolutely to parent */
 	top: 50%; /* buttons are halfway down container */
@@ -600,6 +604,6 @@ table a, #comments a{background-color:inherit;}
 	left: 10px; /* 10px from the left */
 }
 
-#right {
+#next {
 	right: 10px;
 }
