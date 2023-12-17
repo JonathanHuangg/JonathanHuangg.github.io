@@ -10,13 +10,20 @@ function toggleText(id) {
     }
 };
 
+/*
+
+Queue system. The first numFiguresToShow figures are shown at startup and the first numFiguresToShow figures 
+are always displayed. When you move out of the queue, you are moved out of the image to the right. 
+
+*/
 document.addEventListener("DOMContentLoaded", function () {
     var figures = document.querySelectorAll("#figureCarousel figure");
     var currIndex = 0;
     var numFiguresToShow = 3;
 
     let queue = [];
-    
+    let currPositions = []; // These are positions of where the figures should be. Does not follow the element. There 
+                            // for simply resizing canvases
     
     /* DEPRECATED Carousel width is not needed anymore
     var carousel = document.getElementById('figureCarousel');
@@ -25,44 +32,47 @@ document.addEventListener("DOMContentLoaded", function () {
     */
 
     function initFigures() {
-        document.getElementById("figureCarousel").style.visibility = 'visible';
+        var parent = document.getElementById("figureCarousel")
+        parent.style.visibility = 'visible';
+        var figureWidth = parent.offsetWidth / numFiguresToShow;
+
+
         figures.forEach((fig, idx) => {
-            
-            fig.style.transition = 'none'; // Disable transitions for startup
-            fig.classList.remove('active'); // keep everything invisibile at startup
+
+            fig.classList.remove('active'); // Keep everything invisible at startup
 
             if (idx < numFiguresToShow) {
                 fig.classList.add('active');
+                fig.style.transform = `translateX(0px)`;
+            } else {
+                let positionOffset = figureWidth * (idx - numFiguresToShow + 1);
+                console.log(`Figure ${idx} position from left: ${positionOffset}px`);
+                fig.style.transform = `translateX(${positionOffset}px)`;
             }
 
-            // Force a reflow to apply the transformation without transition
-            void fig.offsetWidth;
-
-            // Re-enable transitions
-            fig.style.transition = '';
-        })
-
-        /* Allow translations again */
-        setTimeout(() => {
-            figures.forEach((fig) => {
-                fig.style.transition = 'transform 0.5s ease-in-out'; 
-            });
-        }, 0.1); 
+            fig.style.transition = `transform 0.5s ease-in-out`;
+            setTimeout(() => {
+                var rect = fig.getBoundingClientRect();
+                console.log(`Figure ${idx} position from left: ${rect.left}px`);
+            }, 100); 
+    
+        });
     }
 
-    function showFigures(startIndex) {
+    function showFigures() {
+        var figureWidth = document.getElementById("figureCarousel").offsetWidth / numFiguresToShow;
 
-        // Assume that we have 3 figures already there
-        // Get the positions of all the active figures
-
-        let positions = []
-        document.querySelectorAll("#figureCarousel figure.active").forEach((activeFig, idx) => {
-            let position = activeFig.offsetLeft;
-            positions.push(position);
-            console.log(`Active Figure ${idx} position from left: ${activeFig.offsetLeft}px`);
+        figures.forEach((fig, idx) => {
+            let newIdx = (idx - currIndex + figures.length) % figures.length;
+            let positionOffset = newIdx < numFiguresToShow ? 0 : figureWidth * (newIdx - numFiguresToShow + 1);
+    
+            fig.style.transform = `translateX(${positionOffset}px)`;
+            if (newIdx < numFiguresToShow) {
+                fig.classList.add('active');
+            } else {
+                fig.classList.remove('active');
+            }
         });
-
-
     }
 
     function nextFigures() {
