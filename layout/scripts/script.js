@@ -15,19 +15,21 @@ document.addEventListener("DOMContentLoaded", function () {
     var currIndex = 0;
     var numFiguresToShow = 3;
 
-
-    /* Get hardcoded size of figures */ 
-    var style = window.getComputedStyle(figures[0]) /* Retrieves values of all css properties*/ 
-    var margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight);
-    var figureWidth = figures[0].getBoundingClientRect().width + margin;
-
+    let queue = [];
+    
+    
+    /* DEPRECATED Carousel width is not needed anymore
+    var carousel = document.getElementById('figureCarousel');
+    var carouselStyle = window.getComputedStyle(carousel);
+    var carouselWidth = carousel.getBoundingClientRect().width - parseFloat(carouselStyle.paddingLeft) - parseFloat(carouselStyle.paddingRight);
+    */
 
     function initFigures() {
         document.getElementById("figureCarousel").style.visibility = 'visible';
         figures.forEach((fig, idx) => {
-            fig.style.transition = 'none';
-            fig.style.transform = `translateX(${idx}%)`;
-            fig.classList.remove('active');
+            
+            fig.style.transition = 'none'; // Disable transitions for startup
+            fig.classList.remove('active'); // keep everything invisibile at startup
 
             if (idx < numFiguresToShow) {
                 fig.classList.add('active');
@@ -45,35 +47,38 @@ document.addEventListener("DOMContentLoaded", function () {
             figures.forEach((fig) => {
                 fig.style.transition = 'transform 0.5s ease-in-out'; 
             });
-        }, 1); //
+        }, 0.1); 
     }
 
     function showFigures(startIndex) {
-        figures.forEach((fig, idx) => {
-            const VisiblePortion = idx - startIndex;
 
-            /* Slide offset (recall the figureWidth has margin */
+        // Assume that we have 3 figures already there
+        // Get the positions of all the active figures
 
-            const offset = VisiblePortion * figureWidth
+        let positions = []
+        document.querySelectorAll("#figureCarousel figure.active").forEach((activeFig, idx) => {
+            let position = activeFig.offsetLeft;
+            positions.push(position);
+            console.log(`Active Figure ${idx} position from left: ${activeFig.offsetLeft}px`);
+        });
 
-            fig.style.transform = `translateX(-${offset}%)`;
 
-            if (idx >= startIndex && idx < startIndex + numFiguresToShow) {
-                fig.classList.add('active');
-            } else {
-                fig.classList.remove('active');
-            }
-        })
     }
 
     function nextFigures() {
         currIndex = (currIndex + 1) % figures.length;
         showFigures(currIndex);
+        document.querySelectorAll("#figureCarousel figure").forEach((fig, idx) => {
+            console.log(`Figure ${idx} position from left: ${fig.offsetLeft}px`);
+        });
     }
 
     function prevFigures() {
         currIndex = (currIndex - 1 + figures.length) % figures.length;
-        showFigures(currIndex)
+        showFigures(currIndex);
+        document.querySelectorAll("#figureCarousel figure").forEach((fig, idx) => {
+            console.log(`Figure ${idx} position from left: ${fig.offsetLeft}px`);
+        });
     }
 
     document.getElementById("next").addEventListener("click", nextFigures);

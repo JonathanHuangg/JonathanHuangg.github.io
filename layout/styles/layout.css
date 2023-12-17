@@ -81,7 +81,7 @@ File: Layout CSS
 .shout figure {
 
 	flex: 0 0 33.333333%; /* Flex grow, flex shrink, flex-basis */
-    transition: transform 2s ease; /* Smooth transition for the transform effect */
+    transition: transform 0.5s ease-in-out; /* Smooth transition for the transform effect */
     margin: 0; /* Reset any default margins */
     text-align: center; /* Center text within the figure */
 	display: none;
@@ -211,8 +211,7 @@ This gives a smooth transition to "ALL" elements used in the layout - other than
 If you don't want it to fade all elements, you have to list the ones you want to be faded individually
 Delete it completely to stop fading
 --------------------------------------------------------------------------------------------------------------- */
-*, *::before, *::after{transition:all .3s ease-in-out;}
-#mainav form *{transition:none !important;}
+
 
 
 /* ------------------------------------------------------------------------------------------------------------ */
