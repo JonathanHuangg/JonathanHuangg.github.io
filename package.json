@@ -1,0 +1,1 @@
+{"description":"Jonathan Huang's personal site — a single hand-written page, no template, no dependencies.","name":"jonathanhuangg.github.io","private":true,"scripts":{"test":"node --test tests/*.test.js"},"version":"1.0.0"}

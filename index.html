@@ -1,160 +1,437 @@
 <!DOCTYPE html>
-<!--
-Template Name: Chillaid
-Author: <a href="https://www.os-templates.com/">OS Templates</a>
-Author URI: https://www.os-templates.com/
-Copyright: OS-Templates.com
-Licence: Free to use under our free template licence terms
-Licence URI: https://www.os-templates.com/template-terms
--->
-<html lang="">
-<!-- To declare your language - read more here: https://www.w3.org/International/questions/qa-html-language-declarations -->
+<html lang="en">
 <head>
-<title> Jonathan Huang </title>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link href="layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jonathan Huang — Innovate. Learn. Grow.</title>
+<meta name="description" content="Jonathan Huang is a computer science student at Georgia Tech. He builds chess engines, LLM tools, iPhone apps, and games.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --paper: #f7f3ec;
+    --card: #fffdf8;
+    --ink: #1b1712;
+    --muted: #6f675c;
+    --line: #e3dac8;
+    --gold: #a68b3c;
+    --gold-soft: #b3a369;
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--gold-soft); color: var(--ink); }
+  a { color: inherit; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  header.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 28px 0 0;
+  }
+  .mark {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border-bottom: 3px solid var(--gold);
+    padding-bottom: 2px;
+  }
+  nav[aria-label="Sections"] { display: flex; gap: 4px; align-items: center; }
+  nav[aria-label="Sections"] a {
+    font-family: var(--mono);
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--muted);
+    padding: 6px 10px;
+    border-radius: 999px;
+  }
+  nav[aria-label="Sections"] a:hover { color: var(--ink); background: #efe8d8; }
+  nav[aria-label="Sections"] a.github {
+    color: var(--ink);
+    border: 1px solid var(--line);
+    background: var(--card);
+  }
+
+  /* Hero */
+  .hero { padding: 84px 0 64px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 20px;
+  }
+  .eyebrow b { color: var(--gold); font-weight: 700; }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(52px, 9vw, 96px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 0 24px;
+  }
+  h1 em { font-style: italic; color: var(--gold); }
+  .lede {
+    font-family: var(--serif);
+    font-size: clamp(19px, 2.6vw, 23px);
+    line-height: 1.5;
+    max-width: 34em;
+    margin: 0;
+  }
+  .lede a { text-underline-offset: 3px; }
+
+  /* Sections */
+  section { padding: 56px 0 8px; }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 12px;
+  }
+  .section-label b { color: var(--gold); }
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(30px, 4.5vw, 42px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 0 0 8px;
+  }
+  .section-intro { color: var(--muted); max-width: 36em; margin: 0 0 28px; }
+
+  /* Filters */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
+  .filters button {
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .filters button:hover { color: var(--ink); border-color: var(--gold); }
+  .filters button[aria-pressed="true"] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+  .count { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 0 0 24px; }
+
+  /* Project grid */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--gold);
+    padding: 22px 22px 18px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 160ms ease, box-shadow 160ms ease;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(27, 23, 18, 0.10); }
+  .card[hidden] { display: none; }
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .card h3 { font-family: var(--serif); font-size: 24px; line-height: 1.2; margin: 0 0 8px; }
+  .card h3 a { text-decoration: none; }
+  .card h3 a:hover { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+  .card p { margin: 0 0 18px; color: #3d372e; flex: 1; }
+  .card-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .lang { display: inline-flex; align-items: center; gap: 7px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .card-foot a { font-family: var(--mono); font-size: 12px; text-decoration: none; white-space: nowrap; }
+  .card-foot a:hover { color: var(--gold); }
+
+  .more {
+    margin: 28px 0 0;
+    padding: 20px 22px;
+    border: 1px dashed var(--gold);
+    border-radius: 4px;
+    color: var(--muted);
+  }
+  .more a { color: var(--ink); }
+
+  /* About */
+  .about p { max-width: 38em; margin: 0 0 16px; }
+  .about p:last-child { margin-bottom: 0; }
+
+  /* Footer */
+  footer {
+    margin-top: 72px;
+    border-top: 1px solid var(--line);
+    padding: 28px 0 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  footer a { color: var(--ink); }
+
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+    .hero { padding: 56px 0 48px; }
+    nav[aria-label="Sections"] a:not(.github) { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .card { transition: none; }
+  }
+</style>
 </head>
-<body id="top">
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<div class="wrapper row1">
-  <header id="header" class="hoc clear">
-    <div id="logo" class="fl_left"> 
-      <!-- ################################################################################################ -->
-      <h1 class="logoname"><a href="index.html">J<span>H</span>uang</a></h1>
-      <!-- ################################################################################################ -->
-    </div>
-    <nav id="mainav" class="fl_right"> 
-      <!-- ################################################################################################ -->
-      <ul class="clear">
-        <li class="active"><a href="index.html">Home</a></li>
-        <li><a class="drop" href="#">Pages</a>
-          <ul>
-            <li><a href="pages/gallery.html">Gallery</a></li>
-            <li><a href="pages/full-width.html">Full Width</a></li>
-            <li><a href="pages/sidebar-left.html">Sidebar Left</a></li>
-            <li><a href="pages/sidebar-right.html">Sidebar Right</a></li>
-            <li><a href="pages/basic-grid.html">Basic Grid</a></li>
-            <li><a href="pages/font-icons.html">Font Icons</a></li>
-          </ul>
-        </li>
-        <li><a class="drop" href="#">Dropdown</a>
-          <ul>
-            <li><a href="#">Level 2</a></li>
-            <li><a class="drop" href="#">Level 2 + Drop</a>
-              <ul>
-                <li><a href="#">Level 3</a></li>
-                <li><a href="#">Level 3</a></li>
-                <li><a href="#">Level 3</a></li>
-              </ul>
-            </li>
-            <li><a href="#">Level 2</a></li>
-          </ul>
-        </li>
-        <li><a href="#">Link Text</a></li>
-        <li><a href="#">Link Text</a></li>
-        <li><a href="#">Link Text</a></li>
-      </ul>
-      <!-- ################################################################################################ -->
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="mark" href="#top">JH</a>
+    <nav aria-label="Sections">
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a class="github" href="https://github.com/JonathanHuangg">GitHub ↗</a>
     </nav>
   </header>
-</div>
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<div class="bgded overlay" style="background-image:url('images/demo/backgrounds/01.png');">
-  <div id="pageintro" class="hoc clear"> 
-    <!-- ################################################################################################ -->
-    <article>
-      <h1 class="heading">Jonathan Huang</h1>
-      <h1>Innovate. Learn. Grow.</h1>
-      <footer><a class="btn" href="#"> Explore Projects </a></footer>
-    </article>
-    <!-- ################################################################################################ -->
-  </div>
-</div>
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<div class="wrapper row3">
-  <main class="hoc container clear"> 
-    <!-- main body -->
-    <!-- ################################################################################################ -->
-    <section id="introblocks">
-      <ul class="nospace group btmspace-80 elements elements-four">
-        <li class="one_third">
-          <article><a href="#"><i class="fas fa-hand-rock"></i></a>
-            <h6 class="heading"> Hackathons </h6>
-            <p> Every new hackathon is another new idea explored. </p>
-          </article>
+
+  <main id="top">
+    <div class="hero">
+      <p class="eyebrow"><b>Jonathan Huang</b> &nbsp;·&nbsp; Computer Science, Georgia Tech</p>
+      <h1>Innovate.<br><em>Learn.</em><br>Grow.</h1>
+      <p class="lede">I build things to understand them — chess engines, LLM tools,
+        iPhone apps, and games — and I keep building until they work.
+        Below are the projects that made it past the starting line.</p>
+    </div>
+
+    <section id="projects" aria-labelledby="projects-heading">
+      <p class="section-label"><b>01</b> / Projects</p>
+      <h2 id="projects-heading">Things I&rsquo;ve built.</h2>
+      <p class="section-intro">Ten projects, each with a working repo behind it. No demos
+        that don&rsquo;t run, no screenshots of someone else&rsquo;s work.</p>
+
+      <div class="filters" role="group" aria-label="Filter projects">
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-filter="ai-ml" aria-pressed="false">AI &amp; ML</button>
+        <button type="button" data-filter="apps" aria-pressed="false">Apps</button>
+        <button type="button" data-filter="games" aria-pressed="false">Games</button>
+      </div>
+      <p class="count" id="project-count" aria-live="polite">Showing 10 of 10 projects</p>
+
+      <ul class="grid">
+        <li class="card" data-category="ai-ml">
+          <div class="card-meta"><span>AI &amp; ML</span><span>2026</span></div>
+          <h3><a href="https://github.com/JonathanHuangg/chess_engine">ChessBrain</a></h3>
+          <p>A high-performance chess engine that learns grandmaster games: an ETL
+            pipeline to turn PGNs into training data, PyTorch training, and Monte
+            Carlo tree search to choose moves.</p>
+          <div class="card-foot">
+            <span class="lang"><span class="dot" style="background:#f34b7d"></span>C++</span>
+            <a href="https://github.com/JonathanHuangg/chess_engine">View on GitHub ↗</a>
+          </div>
         </li>
-        <li class="one_third">
-          <article><a href="#"><i class="fas fa-history"></i></a>
-            <h6 class="heading"> School Projects </h6>
-            <p> Big brain learning </p>
-          </article>
+
+        <li class="card" data-category="ai-ml">
+          <div class="card-meta"><span>AI &amp; ML</span><span>2025</span></div>
+          <h3><a href="https://github.com/JonathanHuangg/AutoLLMTuner">AutoLLMTuner</a></h3>
+          <p>Evolutionary search (NSGA-II) for mixed-precision LLM quantization,
+            trading off accuracy, memory footprint, and inference latency to find
+            the best bit-width for every layer.</p>
+          <div class="card-foot">
+            <span class="lang"><span class="dot" style="background:#3572A5"></span>Python</span>
+            <a href="https://github.com/JonathanHuangg/AutoLLMTuner">View on GitHub ↗</a>
+          </div>
         </li>
-        <li class="one_third">
-          <article><a href="#"><i class="fas fa-dove"></i></a>
-            <h6 class="heading"> Personal Projects </h6>
-            <p> For when I'm bored. </p>
-          </article>
+
+        <li class="card" data-category="ai-ml">
+          <div class="card-meta"><span>AI &amp; ML</span><span>2025</span></div>
+          <h3><a href="https://github.com/JonathanHuangg/LLM_Minecraft">LLM_Minecraft</a></h3>
+          <p>An LLM agent that plays Minecraft, built on Mineflayer — the model
+            perceives the game world and acts in it, step by step.</p>
+          <div class="card-foot">
+            <span class="lang"><span class="dot" style="background:#f1e05a"></span>JavaScript</span>
+            <a href="https://github.com/JonathanHuangg/LLM_Minecraft">View on GitHub ↗</a>
+          </div>
+        </li>
+
+        <li class="card" data-category="ai-ml">
+          <div class="card-meta"><span>AI &amp; ML</span><span>2023</span></div>
+          <h3><a href="https://github.com/JonathanHuangg/Diversify">Diversify</a></h3>
+          <p>Rates how diverse an investment portfolio is, with Gaussian mixture
+            and hierarchical clustering models trained on web-scraped data.
+            A Georgia Tech CS 4641 machine learning project.</p>
+          <div class="card-foot">
+            <span class="lang"><span class="dot" style="background:#DA5B0B"></span>Jupyter Notebook</span>
+            <a href="https://github.com/JonathanHuangg/Diversify">View on GitHub ↗</a>
+          </div>
+        </li>
+
+        <li class="card" data-category="apps">
+          <div class="card-meta"><span>Apps</span><span>2024</span></div>
+          <h3><a href="https://github.com/JonathanHuangg/ChromeCompetition">Chrome Screentime</a></h3>
+          <p>A Chrome extension that tracks where your browsing time goes, by
+            category and by day — entirely on-device, with a popup summary and
+            a full calendar dashboard. Built for a friendly build competition.</p>
+          <div class="card-foot">
+            <span class="lang"><span class="dot" style="background:#f1e05a"></span>JavaScript</span>
+            <a href="https://github.com/JonathanHuangg/ChromeCompetition">View on GitHub ↗</a>
+          </div>
+        </li>
+
+        <li class="card" data-category="apps">
+          <div class="card-meta"><span>Apps</span><span>2024</span></div>
+          <h3><a href="https://github.com/JonathanHuangg/Vosik">Vosik</a></h3>
+          <p>Fit tunes, fit you: a workout app that matches music to your reps.
+            Built for the Hackalytics hackathon.</p>
+          <div class="card-foot">
+            <span class="lang"><span class="dot" style="background:#438eff"></span>Objective-C</span>
+            <a href="https://github.com/JonathanHuangg/Vosik">View on GitHub ↗</a>
+          </div>
+        </li>
+
+        <li class="card" data-category="apps">
+          <div class="card-meta"><span>Apps</span><span>2024</span></div>
+          <h3><a href="https://github.com/JonathanHuangg/HomeSecuritySystem-iPhone">Home Security</a></h3>
+          <p>An iPhone app that discovers home security services on the local
+            network over Bonjour and connects to them.</p>
+          <div class="card-foot">
+            <span class="lang"><span class="dot" style="background:#F05138"></span>Swift</span>
+            <a href="https://github.com/JonathanHuangg/HomeSecuritySystem-iPhone">View on GitHub ↗</a>
+          </div>
+        </li>
+
+        <li class="card" data-category="apps">
+          <div class="card-meta"><span>Apps</span><span>2024</span></div>
+          <h3><a href="https://github.com/JonathanHuangg/Rush-App">Rush App</a></h3>
+          <p>An all-encompassing app for fraternity rush, built over a summer.</p>
+          <div class="card-foot">
+            <span class="lang"><span class="dot" style="background:#438eff"></span>Objective-C</span>
+            <a href="https://github.com/JonathanHuangg/Rush-App">View on GitHub ↗</a>
+          </div>
+        </li>
+
+        <li class="card" data-category="games">
+          <div class="card-meta"><span>Games</span><span>2025</span></div>
+          <h3><a href="https://github.com/JonathanHuangg/Poker">Poker</a></h3>
+          <p>Texas Hold&rsquo;em against the computer, in the terminal: pre-flop,
+            flop, turn, river, showdown.</p>
+          <div class="card-foot">
+            <span class="lang"><span class="dot" style="background:#3572A5"></span>Python</span>
+            <a href="https://github.com/JonathanHuangg/Poker">View on GitHub ↗</a>
+          </div>
+        </li>
+
+        <li class="card" data-category="games">
+          <div class="card-meta"><span>Games</span><span>2023</span></div>
+          <h3><a href="https://github.com/JonathanHuangg/DungeonCrawler">Dungeon Crawler</a></h3>
+          <p>A 2D dungeon crawler from CS 2340, built on Singleton, Factory,
+            and Decorator patterns with an MVVM architecture.</p>
+          <div class="card-foot">
+            <span class="lang"><span class="dot" style="background:#b07219"></span>Java</span>
+            <a href="https://github.com/JonathanHuangg/DungeonCrawler">View on GitHub ↗</a>
+          </div>
         </li>
       </ul>
+
+      <p class="more">More on GitHub, including a C++ profiler, a front-end
+        challenge build, and the Minecraft projects:
+        <a href="https://github.com/JonathanHuangg?tab=repositories">github.com/JonathanHuangg ↗</a></p>
     </section>
-    <!-- ################################################################################################ -->
 
-    <section class="group shout" id="figureCarousel">
-      <!-- All of the different projects I have worked on, could be in chronological order-->
-      <!-- The javaScript does all positioning -->
-      <!-- ScribbleText -->
-      <figure>
-          <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-            <img src="images/logos/logo.svg" onclick="toggleText('text1')">
-          </div>
-          <figcaption class="heading" onclick="toggleText('text1')"><a> ScribbleText </a></figcaption>
-          <div id="text1" class="hidden-text">Your additional text for Accumsan placerat...</div>
-      </figure>
-
-      <!-- Morse Torch -->
-      <figure>
-          <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-            <img src="images/demo/546x356.png" alt="" onclick="toggleText('text2')">
-          </div>
-          <figcaption class="heading" onclick="toggleText('text2')"><a>One</a></figcaption>
-          <div id="text2" class="hidden-text">Your additional text for Scelerisque etiam...</div>
-      </figure>
-
-      <!-- PlaceHolder -->
-      <figure>
-        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-          <img src="images/demo/546x356.png" alt="" onclick="toggleText('text2')">
-        </div>
-        <figcaption class="heading" onclick="toggleText('text2')"><a>Two</a></figcaption>
-        <div id="text2" class="hidden-text">Your additional text for Scelerisque etiam...</div>
-      </figure>
-
-      <!-- Placeholder -->
-      <figure>
-        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-          <img src="images/demo/546x356.png" alt="" onclick="toggleText('text2')">
-        </div>
-        <figcaption class="heading" onclick="toggleText('text2')"><a>Three</a></figcaption>
-        <div id="text2" class="hidden-text">Your additional text for Scelerisque etiam...</div>
-      </figure>
-
-      <!-- Buttons for navigating carousel -->
-      <button id="prev"> Previous </button>
-      <button id="next"> Next </button>
-
-
-
-  </section>
-  <script src="layout/scripts/script.js"></script>
-    <!-- ################################################################################################ -->
-    <!-- / main body -->
-    <div class="clear"></div>
+    <section id="about" class="about" aria-labelledby="about-heading">
+      <p class="section-label"><b>02</b> / About</p>
+      <h2 id="about-heading">Learning in public.</h2>
+      <p>I&rsquo;m a computer science student at Georgia Tech. Most of what I
+        know, I learned by starting something before I knew how to finish it —
+        a chess engine, a quantization tuner, an iPhone app — and then doing
+        the unglamorous work of making it actually run.</p>
+      <p>I also teach Python to kids, through
+        <a href="https://github.com/JonathanHuangg/Python-Camp">Python-Camp</a>
+        and
+        <a href="https://github.com/JonathanHuangg/Python-Class">Python-Class</a>.
+        Explaining something clearly is the fastest way to find out whether
+        you understand it.</p>
+      <p>The best way to reach me is through
+        <a href="https://github.com/JonathanHuangg">GitHub</a>.</p>
+    </section>
   </main>
+
+  <footer>
+    <span>Jonathan Huang</span>
+    <span>Designed and built by hand — one HTML file, no template, no tracking.</span>
+    <a href="https://github.com/JonathanHuangg">github.com/JonathanHuangg ↗</a>
+  </footer>
+
 </div>
+
+<script>
+  // Project filters. Buttons toggle aria-pressed; cards outside the
+  // selected category are hidden and the count line updates.
+  (function () {
+    var buttons = document.querySelectorAll(".filters button");
+    var cards = document.querySelectorAll(".grid .card");
+    var count = document.getElementById("project-count");
+
+    function apply(filter) {
+      var shown = 0;
+      cards.forEach(function (card) {
+        var visible = filter === "all" || card.dataset.category === filter;
+        card.hidden = !visible;
+        if (visible) shown += 1;
+      });
+      count.textContent = "Showing " + shown + " of " + cards.length + " projects";
+      buttons.forEach(function (button) {
+        button.setAttribute("aria-pressed", String(button.dataset.filter === filter));
+      });
+    }
+
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        apply(button.dataset.filter);
+      });
+    });
+  })();
+</script>
+</body>
+</html>
